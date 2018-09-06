@@ -1,5 +1,5 @@
 class Rating < ApplicationRecord
-	belongs_to :comment
-	belongs_to :product
+	belongs_to :rateable, polymorphic: true
 	belongs_to :user
 end
+

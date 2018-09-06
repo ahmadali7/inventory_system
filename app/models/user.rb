@@ -1,6 +1,10 @@
 class User < ApplicationRecord
 	has_many :orders
 	has_many :comments
+
+	has_many :images, as: :imageable
+	has_one :rating
+
 	before_create :auto_fill_data
 	attr_accessor :country, :province, :district, :city	
 	
