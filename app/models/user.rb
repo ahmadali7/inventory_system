@@ -2,8 +2,9 @@ class User < ApplicationRecord
 	has_many :orders
 	has_many :comments
 	has_many :images, as: :imageable
-	has_one :rating
-
+	has_many :rating
+	validates_associated :orders, :comments, :rating, :images
+	validates :first_name, :last_name, presence: true# :images, :address, presence: true
 	before_create :auto_fill_data
 	attr_accessor :country, :province, :district, :city	
 	
