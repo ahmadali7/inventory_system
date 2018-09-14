@@ -13,4 +13,16 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require cocoon
 //= require_tree .
+
+
+function main() {
+	$("#img").click(function function_name(argument) {
+		var img = $('#img')
+		ParentNode.append(img)
+	})
+	
+}
+$(document).ready(main());
+

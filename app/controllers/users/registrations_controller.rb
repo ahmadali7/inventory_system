@@ -5,14 +5,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+   super
+    # @user = User.new
+   @user.photos.build
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+      if @user.save
+        params[:photos]['image'].each do |a|
+          @photo = @user.photos.create!(:image => a)
+       end
+        
+      end
+  end
 
   # GET /resource/edit
   # def edit
@@ -42,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def sign_up_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :province, :district, :city)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :province, :district, :city, photos_attributes: [ :image ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
