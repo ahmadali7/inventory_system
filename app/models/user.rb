@@ -19,7 +19,19 @@ class User < ApplicationRecord
 
 	def auto_fill_data
 		self.address = [city, district, province, country].join(", ")
-		self.role = "buyer"
+		#self.role = "buyer"
+	end
+
+	def admin?
+		role == 'admin'
+	end
+	
+	def moderator?
+		role == 'moderator'
+	end
+
+	def buyer?
+		role == 'buyer'
 	end
 
 end

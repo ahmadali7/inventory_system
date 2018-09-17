@@ -47,10 +47,9 @@
   </div>
 
   <div class="field">
-    <%= form.fields_for :photos do |i| %>
-      <%= i.file_field :image, multiple: true %>
+    <%= form.fields_for :photos, Photo.new do |i| %>
+      <%= i.file_field :image, :multiple => true, name: "photos[image][]" %>
     <% end %>
-
   </div>
 
   <div class="actions">

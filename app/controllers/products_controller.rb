@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
+
   end
 
   # GET /products/1
@@ -16,6 +17,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @photos = @product.photos.build
+    authorize @product
   end
 
   # GET /products/1/edit
@@ -31,12 +33,11 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     respond_to do |format|
-      if @product.save && @product.photos.present?
+      if @product.save 
         params[:photos]['image'].each do |a|
-          @photo = @product.photos.build!(:image => a)
+          @photo = @product.photos.create!(:image => a)
        end
 
-       @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -51,6 +52,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
+
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
       else

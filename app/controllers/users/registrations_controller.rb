@@ -17,11 +17,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if @user.save
         params[:photos]['image'].each do |a|
           @photo = @user.photos.create!(:image => a)
-       end
-        
+        end
       end
   end
 
+  def add_user
+    @user = User.new(user_params)
+
+    respond_to do |format|
+      if @user.save 
+        params[:photos]['image'].each do |a|
+          @photo = @product.photos.create!(:image => a)
+       end
+
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+    authorize @user
+  end
   # GET /resource/edit
   # def edit
   #   super
@@ -53,6 +70,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :province, :district, :city, photos_attributes: [ :image ])
   end
 
+  def user_params
+    params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :province, :district, :city, :role, photos: [ :image ])
+  end
+
   # If you have extra params to permit, append them to the sanitizer.
   def account_update_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :address)
@@ -67,4 +88,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
 end

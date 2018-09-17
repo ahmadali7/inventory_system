@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Images</th>
+      <th>Image</th>
       <th>Name</th>
       <th>Category</th>
       <th>Price</th>
@@ -21,10 +21,7 @@
     <% @products.each do |product| %>
       <tr>
         <td>
-          <% for i in product.photos.all do %>
-          <%= image_tag i.image.url, size: "50x50" %>
-        <% end %>
-    
+          <%= image_tag product.photos.last.image.url, size: "50x50" if product.photos.present?%>    
         </td>
         <td><%= product.name %></td>
         <td><%= product.category %></td>
@@ -35,8 +32,8 @@
         <td><%= product.description %></td>
         
         <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) if policy(Product).edit?%></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } if policy(Product).destroy? %></td>
         <td><%= link_to 'Add To Cart', add_to_cart_path(:product_id => product.id) %></td>
       </tr>
     <% end %>
@@ -45,4 +42,4 @@
 
 <br>
 
-<%= link_to 'New Product', new_product_path %>
+<%= link_to 'New Product', new_product_path if policy(Product).new? %>

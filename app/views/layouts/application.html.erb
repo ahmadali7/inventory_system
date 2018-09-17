@@ -22,6 +22,7 @@
       <%= link_to "Sign In", new_user_session_path %>
     <% end %>
     <%= link_to "Check Cart", carts_path %>
+    <%= link_to "Add User", add_user_path if user_signed_in? && policy(User).add_user? %>
 
     <%= yield %>
   </body>
