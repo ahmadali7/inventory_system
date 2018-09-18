@@ -12,8 +12,13 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'users/registrations', sessions: 'users/sessions' }
 
   get 'add_to_cart', action: 'create', controller: 'carts'
+  # devise_scope :user do
+  #   get 'add_user', :action => 'add_user', :controller => 'users/registrations', :as => 'add_user'
+  # end
+
   devise_scope :user do
     get 'add_user', to: 'users/registrations#add_user'
+    post 'create_user', to: 'users/registrations#create_user'
   end
 
 end
