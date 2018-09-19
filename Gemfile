@@ -22,10 +22,10 @@ gem 'coffee-rails', '~> 4.2'
 #gem 'jquery-rails' and gem 'turbolinks'
 
 gem 'turbolinks', '~> 5'
-gem 'jquery-rails'
+
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-gem 'pundit'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -40,11 +40,16 @@ gem 'pundit'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+gem 'bootstrap', '~> 4.1.3'
+
+gem 'jquery-rails'
 gem 'devise'
-gem 'bootstrap-sass'
+gem 'pundit'
+# gem 'bootstrap-sass'
 gem 'pg'
 gem 'carrierwave', '~> 1.0'
-gem 'cocoon'
+
+#gem 'cocoon'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

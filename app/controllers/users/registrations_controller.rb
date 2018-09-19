@@ -36,12 +36,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   def create_user
     @user = User.new(user_params)
-      puts @user.inspect
       if @user.save
-        puts "+++++++++++++++++++++++++++++++++++++++"
-        puts @user.inspect
         params[:photos]['image'].each do |a|
-          puts "-------------------------------------"
           @photo = @user.photos.create!(:image => a)
         end
 

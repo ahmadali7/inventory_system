@@ -22,29 +22,38 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    authorize @product
   end
 
   # POST /products
   # POST /products.json
   def create
-    puts "===================="
-    puts product_params.inspect
-
+    photo = []
     @product = Product.new(product_params)
 
-    respond_to do |format|
-      if @product.save 
         params[:photos]['image'].each do |a|
-          @photo = @product.photos.create!(:image => a)
-       end
+          photo << @product.photos.build(:image => a)
+          puts "+++++++++++++++++++++++++++++++++"
+          puts "photos building"
+        end
+        if photo[5].nil?
+          puts "+++++++++++++++++++++++++++++++++"
+          puts "data is not saving"
+          @product.save
+          photo.each do |p|
+            p.save
+          end
+          puts "=============================="
+          puts "every thing saved"
+          redirect_to @product, notice: 'Product was successfully created.'
 
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+        else
+          puts "--------------------------------"
+          puts "not created anything"
+          render :new, notice: 'select minimum 5 images'
+          #format.html { render :new }
+          
+        end
   end
 
   # PATCH/PUT /products/1
