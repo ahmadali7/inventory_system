@@ -6,5 +6,6 @@ class Product < ApplicationRecord
 	has_many :photos, as: :imageable
 	validates_associated :order_items, :comments, :ratings, :photos
 	validates :name, :price, presence: true
+	attr_accessor :quant
 	accepts_nested_attributes_for :photos
 end

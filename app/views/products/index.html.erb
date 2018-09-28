@@ -1,43 +1,59 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Products</h1>
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">Image</th>
-      <th scope="col">Name</th>
-      <th scope="col">Category</th>
-      <th scope="col">Price</th>
-      <th scope="col">Cost</th>
-      <th scope="col">Discount</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Description</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <% @products.each do |product| %>      
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail" >
+          
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td>
-          <%= image_tag product.photos.last.image.url, size: "50x50" if product.photos.present?%>    
-        </td>
-        <td><%= product.name %></td>
-        <td><%= product.category %></td>
-        <td><%= product.price %></td>
-        <td><%= product.cost %></td>
-        <td><%= product.discount %></td>
-        <td><%= product.quantity %></td>
-        <td><%= product.description %></td>
+          <h4 class="text-center"><span class="label label-info"><% product.category %></span></h4>
+          <%=active_link_to (image_tag product.photos.last.image.url), product, class: "img-responsive" if product.photos.present? %>
+          <div class="caption">
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <h3><%= product.name %></h3>
+              </div>
+              <div class="col-md-6 col-xs-6 price">
+                <h3>
+                <label>$<%= product.price %></label></h3>
+              </div>
+            </div>
+              <%= form_tag(add_to_cart_path, remote: true) do %>
+              
+              <%= number_field_tag "quant", 1, min: 0, max: product.quantity %>/<%= product.quantity%>
+              <%= hidden_field_tag 'product_id', product.id  %>
+              <div class="row">
+                <div class="col-md-3">
+                  <%= button_tag "Buy", class: "btn btn-success glyphicon glyphicon-shopping-cart" %>
+                </div>
+                <% end %>
+
+                <div class="col-md-3">
+
+                  <%=active_link_to "Edit", edit_product_path(product), class: "btn btn-primary " if policy(Product).edit? %>
+                </div>
+                <div class="col-md-3">
+
+                  <%=active_link_to "Destroy", product, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger " if policy(Product).edit? %>
+                </div>
+                 <div class="col-md-3">
+
+                  <%=active_link_to "more", product, class: "btn btn-info " %>
+                </div>
+              </div>
+            
+
+          </div>
         
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) if policy(Product).edit?%></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } if policy(Product).destroy? %></td>
-        <td><%= link_to 'Add To Cart', add_to_cart_path(:product_id => product.id) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
+        </div>
+      </div>
+             <% end %>
+ 
+        </div> 
 
-<%= link_to 'New Product', new_product_path if policy(Product).new? %>
+  </div>
+</div>
+

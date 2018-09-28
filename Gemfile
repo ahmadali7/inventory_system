@@ -48,7 +48,8 @@ gem 'pundit'
 # gem 'bootstrap-sass'
 gem 'pg'
 gem 'carrierwave', '~> 1.0'
-
+gem 'bootstrap_form'
+gem 'active_link_to'
 #gem 'cocoon'
 
 group :development, :test do

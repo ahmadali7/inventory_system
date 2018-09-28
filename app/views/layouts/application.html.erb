@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <%= action_cable_meta_tag %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
     <%= render partial: "shared/navbar" %>
 
     

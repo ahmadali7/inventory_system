@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require jquery
 //= require bootstrap-sprockets
+//= require boottemp
 //= require_tree 
 
   jQuery(document).ready(function($) {
@@ -24,9 +25,9 @@
                 interval: 5000
         });
  
- 
+ 		$('#carousel-text').html($('#slide-content-').html());
         //Handles the carousel thumbnails
-       $('[id^=carousel-selector-]').click( function(){
+        $('[id^=carousel-selector-]').click( function(){
             var id = this.id.substr(this.id.lastIndexOf("-") + 1);
             var id = parseInt(id);
             $('#myCarousel').carousel(id);
@@ -37,5 +38,8 @@
         $('#myCarousel').on('slid.bs.carousel', function (e) {
                  var id = $('.item.active').data('slide-number');
                 $('#carousel-text').html($('#slide-content-'+id).html());
+        });
+        $(document).on("click", "#btn_add_cart", function() {
+            alert();
         });
 });

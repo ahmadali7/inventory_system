@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Here we will write documentation of class.
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
@@ -5,15 +8,15 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-
   end
 
   # GET /products/1
   # GET /products/1.json
   def show
+    @comments = @product.comments.all
   end
-
   # GET /products/new
+
   def new
     @product = Product.new
     @photos = @product.photos.build
@@ -28,32 +31,11 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    photo = []
-    @product = Product.new(product_params)
-
-        params[:photos]['image'].each do |a|
-          photo << @product.photos.build(:image => a)
-          puts "+++++++++++++++++++++++++++++++++"
-          puts "photos building"
-        end
-        if photo[5].nil?
-          puts "+++++++++++++++++++++++++++++++++"
-          puts "data is not saving"
-          @product.save
-          photo.each do |p|
-            p.save
-          end
-          puts "=============================="
-          puts "every thing saved"
-          redirect_to @product, notice: 'Product was successfully created.'
-
-        else
-          puts "--------------------------------"
-          puts "not created anything"
-          render :new, notice: 'select minimum 5 images'
-          #format.html { render :new }
-          
-        end
+    if ProductServices.build(product_params, params[:photos]['image'])
+      redirect_to root_path, notice: 'Product was successfully created.'
+    else
+      render :new
+    end
   end
 
   # PATCH/PUT /products/1
@@ -81,18 +63,16 @@ class ProductsController < ApplicationController
     end
   end
 
-
-
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :category, :price, :cost, :discount, :quantity, :description, photos_attributes: [ :image ])
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
+  # Never trust parameters from the scary internet, only allow the white list
+  # through.
+  def product_params
+    params.require(:product).permit(:name, :category, :price, :cost, :discount,
+                                    :quantity, :description, photos_attributes: [:image])
+  end
 end

@@ -1,92 +1,39 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong></strong>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <div class="container">
-        <div id="main_area">
-                <!-- Slider -->
-                <div class="row">
-                    <div class="col-xs-12" id="slider">
-                        <!-- Top part of the slider -->
-                        <div class="row">
-                            <div class="col-sm-8" id="carousel-bounding-box">
-                                <div class="carousel slide" id="myCarousel">
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-                                      <% @product.photos.all.each_with_index do |img, i|%>
-                                        <% if i==0 %>
-                                          <div class="active item" data-slide-number="<%= i %>" >
-                                          <% else %>
-                                          <div class="item" data-slide-number="<%= i %>" >
-                                          <% end %>
-                                        <%= image_tag img.image.url %>
-                                        </div>
-                                      <% end %>
-                                    </div><!-- Carousel nav -->
-                                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                          <span class="glyphicon glyphicon-chevron-left"></span>                                       
-                                      </a>
-                                      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                          <span class="glyphicon glyphicon-chevron-right"></span>                                       
-                                      </a>         
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div><!--/Slider-->
-
-                <div class="row hidden-xs" id="slider-thumbs">
-                        <!-- Bottom switcher of slider -->
-                        <ul class="hide-bullets">
-                          <% @product.photos.all.each_with_index do |img, i| %>
-                            <li class="col-sm-2">
-                            <a class="thumbnail" id="carousel-selector-<%= i %>">
-                            <%= image_tag img.image.url %>
-                            </a>
-                            </li>
-                          <% end %>
-                        </ul>                 
-                </div>
-        </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Comments</h3>
+    </div><!-- /col-sm-12 -->
+  </div><!-- /row -->
 </div>
+  <%= form_tag (product_comments_path(@product.id)), remote: true do |f| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-1">
+          <div class="thumbnail">
+            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+          </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
+        <div class="col-sm-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <%= label_tag :content %>
+            </div>
+              <%= text_area_tag :content, nil, style: "width: 100%" %>
+          <div>
+        </div>
+      </div><!-- /panel panel-default -->
+      <%= submit_tag 'Create Message' %>
+    </div><!-- /col-sm-5 -->
+
+  <% end %> 
+  <ul class='comments'>
+    <%= render @comments.reverse %>
+  </ul>
+</div>
+</div>
 </p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @product.category %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
-
-<p>
-  <strong>Cost:</strong>
-  <%= @product.cost %>
-</p>
-
-<p>
-  <strong>Discount:</strong>
-  <%= @product.discount %>
-</p>
-
-<p>
-  <strong>Quantity:</strong>
-  <%= @product.quantity %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) if policy(Product).edit? %> |
-<%= link_to 'Back', products_path %>
+<%=active_link_to 'Edit', edit_product_path(@product) if policy(Product).edit? %> |
+<%=active_link_to 'Back', products_path %>

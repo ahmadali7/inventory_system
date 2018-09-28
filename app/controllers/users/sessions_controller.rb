@@ -12,18 +12,13 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     super
-      if !cookies[:cart].nil?
-        x = JSON.parse(cookies[:cart])
-        x.each do |p|
-          notice = add_order(p["product_id"].to_i, p["quantity"].to_i, current_user.id)
-        end
-        cookies.delete :cart
+    if !cookies[:cart].nil?
+      x = JSON.parse(cookies[:cart])
+      x.each do |p|
+        notice = add_order(p["product_id"].to_i, p["quantity"].to_i, current_user.id)
       end
-  end
-
-
-  def generate_order_from_cookies
-    
+      cookies.delete :cart
+    end
   end
   # DELETE /resource/sign_out
   # def destroy
