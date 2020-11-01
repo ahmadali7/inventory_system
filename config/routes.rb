@@ -22,5 +22,5 @@ Rails.application.routes.draw do
     get 'add_user', to: 'users/registrations#add_user'
     post 'create_user', to: 'users/registrations#create_user'
   end
-  # mount ActionCable.server => '/cable'
+  mount ActionCable.server => '/cable'
 end

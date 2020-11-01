@@ -1,24 +1,36 @@
 # README
+User registration system in ruby on rails.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Requirements
 
-Things you may want to cover:
+* Ruby 2.5.1
 
-* Ruby version
+* Rails '~> 5.2.1'
 
-* System dependencies
+### Configuration
 
-* Configuration
+```console
+git clone ''
+```
 
-* Database creation
+```console
+bundle install
 
-* Database initialization
+rake db:setup
 
-* How to run the test suite
+rails s
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Runnig Tests
 
-* Deployment instructions
+* Running all tests
+```bash
+rspec
+```
 
-* ...
+* Running tests for an specific file:
+```bash
+rspec test/models/user_spec.rb 
+```
+
+

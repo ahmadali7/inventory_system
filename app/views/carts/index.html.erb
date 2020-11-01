@@ -1,0 +1,66 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th></th>
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <% x = nil, total = 0 %>
+  <tbody>
+    <% if user_signed_in? && !@order_item.nil? %>
+      <% @order_item.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.product.description %></td>
+          <td><%= item.product.price %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.total %>
+            <% total = item.order.total_bill %>
+          </td>
+          <td><%= active_link_to 'remove', cart_path(item),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+    <% elsif cookies[:cart].present? %>
+      <% x = JSON.parse(cookies[:cart]) %>
+      <% x.each do |p| %>
+        <% prod = Product.find(p["product_id"]) %>
+        <tr>
+          <td><%= prod.name %></td>
+          <td><%= prod.description %></td>
+          <td><%= prod.price %></td>
+          <td><%= p["quantity"] %></td>
+          <td><%= p["quantity"] * prod.price %></td>
+          
+          <td><%= active_link_to 'remove', cart_path(p["product_id"]),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+          </td>
+          <% total += p["quantity"] * prod.price %>
+          </tr>
+        </tr>
+
+      <% end %>
+    <% end %>
+  </tbody>
+  <thead>
+    <tr>
+      <th>Total</th>
+      <th></th>
+      <th></th>
+      <th> </th>
+      <th>
+        <%= total %>
+      </th>
+
+    </tr>
+  </thead>
+</table>
+<%= active_link_to "Back", :back %>

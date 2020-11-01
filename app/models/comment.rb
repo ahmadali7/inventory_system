@@ -26,6 +26,8 @@ class Comment < ApplicationRecord
 
 	def broadcastjob
 		puts "******"*100
+		puts "in broadcast"
+		puts "******"*100
 	  CommentBroadcastJob.perform_later(self)
 	end
 end

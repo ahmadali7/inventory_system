@@ -1,0 +1,26 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="thumbnail">
+        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+      </div><!-- /thumbnail -->
+    </div><!-- /col-sm-1 -->
+
+    <div class="col-sm-5">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          <strong><%= comment.user.first_name %></strong> <span class="text-muted"></span>
+        </div>
+        <div class="panel-body table">
+          <p>
+          <%= comment.content %>    
+          </p>
+          <td><%= link_to 'Edit', edit_product_comment_path(comment.product, comment)%></td>
+
+          <td><%= link_to 'Delete ', [comment.product, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </div><!-- /panel-body -->
+      </div><!-- /panel panel-default -->
+    </div>
+  </div>
+</div><!-- /col-sm-5 -->

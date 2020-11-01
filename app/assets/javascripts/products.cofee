@@ -1,0 +1,5 @@
+$(document).on "turoblinks:load", ->
+	$("#content").on "keypress", (e) ->
+		if e && e.keyCode == 13
+		 e.preventDefault()
+		 $(this).submit()
